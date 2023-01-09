@@ -1,0 +1,6 @@
+Scripts to Train and Validate the qMRI Application Example
+
+valds_qmri: Creates a Validation Dataset with constant values.
+train_qmri: Trains the unrolled network
+val_qmri: Performs validation and plotting of the results
+gridsearch_qmri: Perform a gridsearch to find optimal scalar regualrisation parameters for reference.
