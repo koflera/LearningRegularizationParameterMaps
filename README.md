@@ -1,1 +1,1 @@
-# LearningRegularisationParameterMaps
+# LearningRegularizationParameterMaps
