@@ -17,7 +17,12 @@ def generate_2d_csmaps(im_size, ncoils, coil_width = 64):
 
 
 def mrisensesim(size, ncoils=8, array_cent=None, coil_width=2, n_rings=None, phi=0):
-    """Apply simulated sensitivity maps. Based on a script by Florian Knoll.
+    """
+
+    Simulate sensitivity maps. 
+    Function borrowed from torchkbnufft (MIT License, Matthew Muckley)
+    https://github.com/mmuckley/torchkbnufft/blob/3e081be6cc0aa866829070882f3f7e5a7d111c93/notebooks/mrisensesim.py 
+    which is based on a script by Florian Knoll.
     Args:
         size (tuple): Size of the image array for the sensitivity coils.
         nc_range (int, default: 8): Number of coils to simulate.
