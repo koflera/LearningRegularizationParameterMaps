@@ -2,7 +2,7 @@ import torch
 import numpy as np
 import argparse
 import random
-from ...encoding_objects.q_cart_mri_enc_obj import Q2DCartEncObj
+from ...encoding_objects.dyn_cart_mri_enc_obj import Dyn2DCartEncObj
 from ...data.qmri.h5 import to_hdf5
 from ...data.qmri import QCartUSDataset, T1Inversion, T1Saturation
 

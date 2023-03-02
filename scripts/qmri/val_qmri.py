@@ -10,7 +10,7 @@ from  scipy.ndimage.morphology import binary_fill_holes
 from ...data.qmri import QCartUSDataset, T1Inversion, T1Saturation
 from ...data.qmri.h5 import h5append, hdf5DS, to_hdf5
 from ...data.qmri.QBrainwebCart import values_t1t2pd3T
-from ...encoding_objects.q_cart_mri_enc_obj import Q2DCartEncObj
+from ...encoding_objects.dyn_cart_mri_enc_obj import Dyn2DCartEncObj
 from ...networks.efficientnet import EfficientNet, MBConfig
 from ...networks.q_cart_mri_primal_dual_nn import QCartPrimalDualNN
 from ...networks.unet import UNet
@@ -84,7 +84,7 @@ for modelfile in args.modelfile:
     model = torch.load(modelfile)
     signalfunction = globals()[model["signalfunction"]]
     q = signalfunction().to(device)
-    EncObj = Q2DCartEncObj()
+    EncObj = Dyn2DCartEncObj()
 
     if model["mode"] == "lambda_cnn":
         CNN_block = UNet(**model["netsettings"])

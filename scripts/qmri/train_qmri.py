@@ -5,7 +5,7 @@ import numpy as np
 import argparse
 import gc
 
-from ...encoding_objects.q_cart_mri_enc_obj import Q2DCartEncObj
+from ...encoding_objects.dyn_cart_mri_enc_obj import Dyn2DCartEncObj
 from ...networks.q_cart_mri_primal_dual_nn import QCartPrimalDualNN
 from ...data.qmri import QCartUSDataset, T1Inversion, T1Saturation
 from ...data.qmri.h5 import hdf5DS
@@ -71,7 +71,7 @@ if not len(ds):
     raise ValueError(f"Unable to open training data at {args.datapath}")
 dl = torch.utils.data.DataLoader(ds, batch_size=args.batchsize, shuffle=True, pin_memory=True)
 
-EncObj = Q2DCartEncObj()
+EncObj = Dyn2DCartEncObj()
 
 if args.mode == "lambda_cnn":
     netsettings = dict(dim=3, n_enc_stages=args.E, n_convs_per_stage=args.C, n_filters=args.K, res_connection=False, bias=True, padding_mode="reflect")

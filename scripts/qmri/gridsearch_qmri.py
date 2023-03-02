@@ -1,6 +1,6 @@
 import torch
 
-from ...encoding_objects.q_cart_mri_enc_obj import Q2DCartEncObj
+from ...encoding_objects.dyn_cart_mri_enc_obj import Dyn2DCartEncObj
 from ...networks.q_cart_mri_primal_dual_nn import QCartPrimalDualNN
 from ...data.qmri.h5 import hdf5DS
 from ...data.qmri import QCartUSDataset, T1Inversion, T1Saturation
@@ -147,7 +147,7 @@ if not len(ds):
     raise ValueError(f"Unable to open training data at {args.datapath}")
 dl = torch.utils.data.DataLoader(ds, batch_size=1, shuffle=False, pin_memory=True)
 
-EncObj = Q2DCartEncObj()
+EncObj = Dyn2DCartEncObj()
 
 netsettings = dict()
 pdhg = QCartPrimalDualNN(EncObj, CNN_block=None, nu=args.nu[-1], mode=args.mode).to(device=device)
