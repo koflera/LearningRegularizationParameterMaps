@@ -107,7 +107,7 @@ for modelfile in args.modelfile:
         additional = [None] * len(dl)
 
     pdhg = QCartPrimalDualNN(EncObj, CNN_block=CNN_block, nu=model["nu"][-1], mode=model["mode"], low_bound=model["low_bound"], up_bound=model["up_bound"]).to(device=device)
-    pdhg.load_state_dict(model["state"])
+    pdhg.load_state_dict(model["state"], strict=False)
 
     modifier = ''
     if args.pdhg_iterations is not None:

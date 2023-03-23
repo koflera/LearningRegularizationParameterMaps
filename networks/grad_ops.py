@@ -32,7 +32,7 @@ class GradOperators(torch.nn.Module):
             padmode (str, optional): one of constant, replicate, circular or refelct. Defaults to "circular".
         """
         super().__init__()
-        self.register_buffer("kernel", self.diff_kernel(dim, mode))
+        self.register_buffer("kernel", self.diff_kernel(dim, mode), persistent=False)
         self._dim = dim
         self._conv = (torch.nn.functional.conv1d, torch.nn.functional.conv2d, torch.nn.functional.conv3d)[dim - 1]
         self._convT = (torch.nn.functional.conv_transpose1d, torch.nn.functional.conv_transpose2d, torch.nn.functional.conv_transpose3d)[dim - 1]
