@@ -1,0 +1,24 @@
+Reconstruct dynamic cardiac MR images with the TV-minimization approach for
+three different choices of regularization parameters set-ups depending on the
+choice of the argument "lambda_mode" in the definition of the network.
+
+"lambda_xyt" --> one scalar regularization parameter for space and time
+"lambda_xy_t" --> one scalar regularization parameter for space (x/y) and one for time (t)
+"lambda_cnn" --> the proposed spatio-temporal regularization parameter map
+
+>>> N.B. This script is NOT intended to demonstrate the superiority of the proposed
+Lambda-Map approach over the choice of scalar parameters. The script's purpose
+is just to show how to use the pdhg network for reconstruction. <<<
+
+The image used in this script is part of the ACDC dataset and NOT one of the images used for testing
+the network in the paper.
+As the image differs in many ways (e.g. scaling, contrast, resolution, ...) from the images used in
+our paper, it might easily occur that there exists a configuration such that the scalar regularization
+parameters actually yield better results than the ones you can obtain with the pre-trained weights
+that generate the spatio-temporal Lambda-map.
+
+This can in fact easily occur, since the Lambda-Map (non-linearly) depends on the range of values of the
+initial image. A potential remedy to guarantee the applicability of the approach to images
+with different scalings could be to apply the CNN to normalized images and scale the output of the
+Lambda-Map with values that for example also take into account the operator-norm of the considered
+imaging problem. This is left for future work.

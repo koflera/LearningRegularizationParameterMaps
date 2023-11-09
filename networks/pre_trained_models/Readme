@@ -1,0 +1,2 @@
+The weights of different 3D U-Net blocks used for training with different number of iterations T used 
+for unrolling the PDHG algorithm, see the corresponding Figure in the paper. 
