@@ -68,10 +68,13 @@ class DynamicImageDenoisingDataset(Dataset):
 			self.noise_level = 'constant'
 			self.sigma = sigma
 
-		elif isinstance(sigma, tuple):
+		elif isinstance(sigma, (tuple, list)):
 			self.noise_level = 'variable'
 			self.sigma_min = sigma[0]
 			self.sigma_max = sigma[1]
+		
+		else:
+			raise ValueError("Invalid sigma value provided, must be float, tuple or list.")
 
 	def create_dyn_img(self, sample_path: str):
 		
@@ -92,7 +95,7 @@ class DynamicImageDenoisingDataset(Dataset):
 			image_data = np.asarray(image)
 			xf.append(image_data)
 			
-		xf = np.stack(xf,axis=-1)
+		xf = np.stack(xf, axis=-1)
 		
 		scale_factor_str = str(self.scale_factor).replace('.','_')
 		np.save(os.path.join(sample_path, f"xf_scale_factor{scale_factor_str}.npy"), xf)
@@ -110,7 +113,7 @@ class DynamicImageDenoisingDataset(Dataset):
 			sigma = self.sigma
 			
 		elif self.noise_level == 'variable':
-			sigma = self.sigma_min + torch.rand(1) * ( self.sigma_max -self.sigma_min )
+			sigma = self.sigma_min + torch.rand(1) * ( self.sigma_max - self.sigma_min )
 
 		x_centred += sigma * torch.randn(self.xf[index].shape, dtype = self.xf[index].dtype)
 

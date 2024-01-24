@@ -123,7 +123,7 @@ class DynamicImagePrimalDualNN(nn.Module):
 
     def forward(self, x, lambda_map=None):
         # initial reconstruction
-        mb, Nx, Ny, Nt = x.shape
+        mb, _, Nx, Ny, Nt = x.shape
         device = x.device
 
         # starting values
@@ -173,7 +173,7 @@ class DynamicImagePrimalDualNN(nn.Module):
             # update q
             q = self.ClipAct(q + sigma * self.GradOps.apply_G(xbar), lambda_reg)
 
-            x1 = x0 - tau * p - tau * self.GradOps.apply_GH(q).unsqueeze(1)
+            x1 = x0 - tau * p - tau * self.GradOps.apply_GH(q)
 
             if kT != self.T - 1:
                 # update xbar
