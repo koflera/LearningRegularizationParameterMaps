@@ -28,15 +28,15 @@ DEVICE = torch.device("cuda:0")
 # Once the data for a specific scaling factor has been created the flag can be set to False.
 dataset_train = DynamicImageDenoisingDataset(
     data_path="../../data/dyn_img/tmp",
-    # ids=TRAINING,
-    ids=[2],
+    # ids=TRAINING,     # paper
+    ids=[2],            # testing
     scale_factor=0.5,
     sigma=[0.1, 0.3],
     strides=[192, 192, 16],
     patches_size=[192, 192, 32],
     # (!) Make sure to set the following flag to True when loading the dataset for the first time.
-    # extract_data=True,
-    extract_data=False,
+    extract_data=True,
+    # extract_data=False,
     device=DEVICE
 )
 
@@ -47,15 +47,15 @@ dataloader_train = torch.utils.data.DataLoader(dataset_train, batch_size=1, samp
 # Validation dataset (see note above)
 dataset_valid = DynamicImageDenoisingDataset(
     data_path="../../data/dyn_img/tmp",
-    # ids=VALIDATION,
-    ids=[11],
+    # ids=VALIDATION,   # paper
+    ids=[11],           # testing
     scale_factor=0.5,
     sigma=[0.1, 0.3],
     strides=[192, 192, 16],
     patches_size=[192, 192, 32],
     # (!) Make sure to set the following flag to True when loading the dataset for the first time.
-    # extract_data=True,
-    extract_data=False,
+    extract_data=True,
+    # extract_data=False,
     device=DEVICE
 )
 
@@ -83,7 +83,9 @@ pdhg = DynamicImagePrimalDualNN(
 optimizer = torch.optim.Adam(pdhg.parameters(), lr=1e-4)
 loss_function = torch.nn.MSELoss()
 
-num_epochs = 6
+num_epochs = 2          # testing
+# num_epochs = 100      # paper
+
 model_states_dir = "./tmp/states"
 os.makedirs(model_states_dir, exist_ok=True)
 
