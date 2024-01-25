@@ -1,8 +1,6 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import numpy as np
-from einops import rearrange
 
 from .grad_ops import GradOperators
 from .prox_ops import ClipAct
@@ -24,15 +22,12 @@ class DynamicImagePrimalDualNN(nn.Module):
         self.GradOps = GradOperators(dim, mode="forward", padmode="circular")
 
         # operator norms
-        self.op_norm_AHA = torch.sqrt(
-            torch.tensor(1.0)
-        )  # op-norm is one for appropriate csms
+        self.op_norm_AHA = torch.sqrt(torch.tensor(1.0))
         self.op_norm_GHG = torch.sqrt(torch.tensor(12.0))
-
         # operator norm of K = [A, \nabla]
         # https://iopscience.iop.org/article/10.1088/0031-9155/57/10/3065/pdf,
         # see page 3083
-        self.L = np.sqrt(self.op_norm_AHA**2 + self.op_norm_GHG**2)
+        self.L = torch.sqrt(self.op_norm_AHA**2 + self.op_norm_GHG**2)
 
         # function for projecting
         self.ClipAct = ClipAct()
@@ -79,10 +74,6 @@ class DynamicImagePrimalDualNN(nn.Module):
         self.phase = phase
 
     def get_lambda_cnn(self, x):
-        # Real-valued, not necessary
-        # x = torch.view_as_real(x)
-        # x = rearrange(x, "b x y t c -> b c x y t")
-
         # padding
         # arbitrarily chosen, maybe better to choose it depending on the
         # receptive field of the CNN or so;
@@ -132,7 +123,6 @@ class DynamicImagePrimalDualNN(nn.Module):
         xnoisy = x.clone()
 
         # dual variable
-        # p = torch.zeros(x.shape, dtype=x.dtype).to(device)
         p = x.clone()
         q = torch.zeros(mb, 3, Nx, Ny, Nt, dtype=x.dtype).to(device)
 
