@@ -103,7 +103,7 @@ for epoch in range(num_epochs):
 
             # Model validation
             validation_loss = validate_epoch(pdhg, dataloader_valid, loss_function)
-            print("VALIDATION LOSS: ", training_loss)
+            print("VALIDATION LOSS: ", validation_loss)
             torch.save(pdhg.state_dict(), f"{model_states_dir}/epoch_{str(epoch).zfill(3)}.pt")
 
     torch.cuda.empty_cache()
